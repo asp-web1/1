@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - SAGE</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="nav-header">
+                <h2>🌿 SAGE</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard/home.html">Dashboard</a></li>
+                <li><a href="/dashboard/daily-progress.html">Daily Progress</a></li>
+                <li><a href="/dashboard/subjects.html">Subjects</a></li>
+                <li><a href="/dashboard/calendar.html" class="active">Calendar</a></li>
+                <li><a href="/dashboard/statistics.html">Statistics</a></li>
+                <li><a href="/dashboard/targets.html">Targets & Milestones</a></li>
+                <li><a href="/dashboard/settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="content-header">
+                <div>
+                    <h1>📅 Calendar</h1>
+                    <div class="user-info">Schedule events and manage your study calendar</div>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="showAddEventModal()">
+                        <span>➕</span> Add Event
+                    </button>
+                </div>
+            </header>
+
+            <!-- Calendar Overview -->
+            <section class="stats-overview">
+                <div class="stat-card">
+                    <h4>📅 This Month</h4>
+                    <div class="stat-value" id="monthEvents">0</div>
+                    <div class="stat-label">Events</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📚 Study Events</h4>
+                    <div class="stat-value" id="studyEvents">0</div>
+                    <div class="stat-label">Scheduled</div>
+                </div>
+                <div class="stat-card">
+                    <h4>🔄 Revision Events</h4>
+                    <div class="stat-value" id="revisionEvents">0</div>
+                    <div class="stat-label">Scheduled</div>
+                </div>
+                <div class="stat-card">
+                    <h4>⏰ Today's Events</h4>
+                    <div class="stat-value" id="todayEvents">0</div>
+                    <div class="stat-label">Events</div>
+                </div>
+            </section>
+
+            <!-- Calendar View -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📅 Study Calendar</h3>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-secondary" onclick="previousMonth()">← Previous</button>
+                        <span id="currentMonth" class="d-flex items-center">Loading...</span>
+                        <button class="btn btn-sm btn-secondary" onclick="nextMonth()">Next →</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="calendarContainer">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upcoming Events -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Upcoming Events</h3>
+                </div>
+                <div class="card-body">
+                    <div id="upcomingEvents">
+                        <!-- Upcoming events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="modal" id="addEventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Add New Event</h3>
+                <button class="close-btn" onclick="closeAddEventModal()">&times;</button>
+            </div>
+            <form id="addEventForm">
+                <div class="form-group">
+                    <label class="form-label">📝 Event Title</label>
+                    <input type="text" id="eventTitle" class="form-input" placeholder="Enter event title" required>
+                </div>
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">📅 Date</label>
+                        <input type="date" id="eventDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">⏰ Time</label>
+                        <input type="time" id="eventTime" class="form-input" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📋 Event Type</label>
+                    <select id="eventType" class="form-input" required onchange="handleEventTypeChange()">
+                        <option value="">Select event type</option>
+                        <option value="study">Study Session</option>
+                        <option value="revision">Revision</option>
+                        <option value="test">Test/Exam</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">🔄 Spaced Repetition</label>
+                    <div class="d-flex items-center gap-3">
+                        <input type="checkbox" id="spacedRepetition" class="form-input" style="width: auto;" onchange="handleSpacedRepetitionChange()">
+                        <span class="text-secondary">Enable automatic reminders on 3rd, 5th, 11th, and 21st days</span>
+                    </div>
+                </div>
+                <div class="form-group" id="spacedRepetitionDetails" style="display: none;">
+                    <label class="form-label">📅 Spaced Repetition Schedule</label>
+                    <div class="spaced-repetition-info">
+                        <p class="text-secondary">Automatic reminders will be created on:</p>
+                        <ul class="spaced-repetition-schedule">
+                            <li>Day 3: First Review</li>
+                            <li>Day 5: Second Review</li>
+                            <li>Day 11: Third Review</li>
+                            <li>Day 21: Final Review</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📚 Subject (Optional)</label>
+                    <select id="eventSubject" class="form-input">
+                        <option value="">Select subject</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📝 Description (Optional)</label>
+                    <textarea id="eventDescription" class="form-input" rows="3" placeholder="Add event description..."></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span> Add Event
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddEventModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/calendar.js"></script>
+</body>
+</html>

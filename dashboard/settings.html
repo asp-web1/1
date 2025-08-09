@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - SAGE</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="nav-header">
+                <h2>🌿 SAGE</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard/home.html">Dashboard</a></li>
+                <li><a href="/dashboard/daily-progress.html">Daily Progress</a></li>
+                <li><a href="/dashboard/subjects.html">Subjects</a></li>
+                <li><a href="/dashboard/calendar.html">Calendar</a></li>
+                <li><a href="/dashboard/statistics.html">Statistics</a></li>
+                <li><a href="/dashboard/targets.html">Targets & Milestones</a></li>
+                <li><a href="/dashboard/settings.html" class="active">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="content-header">
+                <div>
+                    <h1>⚙️ Settings</h1>
+                    <div class="user-info">Customize your SAGE experience and manage your data</div>
+                </div>
+            </header>
+
+            <!-- Settings Overview -->
+            <section class="stats-overview">
+                <div class="stat-card">
+                    <h4>📊 Data Entries</h4>
+                    <div class="stat-value" id="totalEntries">0</div>
+                    <div class="stat-label">Total Records</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📅 Days Tracked</h4>
+                    <div class="stat-value" id="daysTracked">0</div>
+                    <div class="stat-label">Study Days</div>
+                </div>
+                <div class="stat-card">
+                    <h4>💾 Storage Used</h4>
+                    <div class="stat-value" id="storageUsed">0 KB</div>
+                    <div class="stat-label">Local Storage</div>
+                </div>
+                <div class="stat-card">
+                    <h4>🔄 Last Backup</h4>
+                    <div class="stat-value" id="lastBackup">Never</div>
+                    <div class="stat-label">Data Backup</div>
+                </div>
+            </section>
+
+            <!-- Exam Settings -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📅 Exam Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">🎯 Exam Date</label>
+                        <input type="datetime-local" id="examDate" class="form-input">
+                        <div class="form-text">Set your target exam date to enable countdown timer</div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" onclick="updateExamDate()">
+                            <span>💾</span> Update Exam Date
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Theme Settings -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">🎨 Theme Settings</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">🌙 Dark Mode</label>
+                        <div class="d-flex items-center gap-3">
+                            <input type="checkbox" id="darkModeToggle" class="form-input" style="width: auto;">
+                            <span class="text-secondary">Enable dark mode for better eye comfort</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Management -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">💾 Data Management</h3>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-2">
+                        <div class="text-center">
+                            <h5>📤 Export Data</h5>
+                            <p class="text-secondary mb-3">Download your study data as JSON file</p>
+                            <button class="btn btn-primary" onclick="exportData()">
+                                <span>📤</span> Export Data
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <h5>📥 Import Data</h5>
+                            <p class="text-secondary mb-3">Restore your data from a backup file</p>
+                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
+                                <span>📥</span> Import Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Information -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">ℹ️ System Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="system-info-grid">
+                        <div class="system-info-item">
+                            <div class="system-info-label">📊 SAGE Version</div>
+                            <div class="system-info-value">2.0</div>
+                        </div>
+                        <div class="system-info-item">
+                            <div class="system-info-label">🌐 Browser</div>
+                            <div class="system-info-value" id="browserInfo">Loading...</div>
+                        </div>
+                        <div class="system-info-item">
+                            <div class="system-info-label">💾 Storage Type</div>
+                            <div class="system-info-value">Local Storage</div>
+                        </div>
+                        <div class="system-info-item">
+                            <div class="system-info-label">📅 Account Created</div>
+                            <div class="system-info-value" id="accountCreated">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Danger Zone -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-error">⚠️ Danger Zone</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h5 class="text-error">🗑️ Clear All Data</h5>
+                        <p class="text-secondary mb-3">This action cannot be undone. All your study data will be permanently deleted.</p>
+                        <button class="btn btn-error" onclick="clearAllData()">
+                            <span>🗑️</span> Clear All Data
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/settings.js"></script>
+</body>
+</html>

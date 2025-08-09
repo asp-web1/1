@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects - SAGE</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="nav-header">
+                <h2>🌿 SAGE</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard/home.html">Dashboard</a></li>
+                <li><a href="/dashboard/daily-progress.html">Daily Progress</a></li>
+                <li><a href="/dashboard/subjects.html" class="active">Subjects</a></li>
+                <li><a href="/dashboard/calendar.html">Calendar</a></li>
+                <li><a href="/dashboard/statistics.html">Statistics</a></li>
+                <li><a href="/dashboard/targets.html">Targets & Milestones</a></li>
+                <li><a href="/dashboard/settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="content-header">
+                <div>
+                    <h1>📚 Subjects</h1>
+                    <div class="user-info">Manage your subjects and track their progress</div>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="showAddSubjectModal()">
+                        <span>➕</span> Add Subject
+                    </button>
+                </div>
+            </header>
+
+            <!-- Subjects Overview -->
+            <section class="stats-overview">
+                <div class="stat-card">
+                    <h4>📚 Total Subjects</h4>
+                    <div class="stat-value" id="totalSubjects">0</div>
+                    <div class="stat-label">Subjects</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📈 Average Progress</h4>
+                    <div class="stat-value" id="avgProgress">0%</div>
+                    <div class="stat-label">Overall</div>
+                </div>
+                <div class="stat-card">
+                    <h4>🎯 Most Studied</h4>
+                    <div class="stat-value" id="mostStudied">-</div>
+                    <div class="stat-label">Subject</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📊 Total Topics</h4>
+                    <div class="stat-value" id="totalTopics">0</div>
+                    <div class="stat-label">Topics</div>
+                </div>
+            </section>
+
+            <!-- Subjects List -->
+            <section class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📚 Your Subjects</h3>
+                </div>
+                <div class="card-body">
+                    <div id="subjectsList">
+                        <!-- Subjects will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Subject Modal -->
+    <div class="modal" id="addSubjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Add New Subject</h3>
+                <button class="close-btn" onclick="closeAddSubjectModal()">&times;</button>
+            </div>
+            <form id="addSubjectForm">
+                <div class="form-group">
+                    <label class="form-label">📚 Subject Name</label>
+                    <input type="text" id="subjectName" class="form-input" placeholder="Enter subject name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📝 Description (Optional)</label>
+                    <textarea id="subjectDescription" class="form-input" rows="3" placeholder="Add a description for this subject..."></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span> Add Subject
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddSubjectModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Subtopic Modal -->
+    <div class="modal" id="addSubtopicModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📖 Add Subtopic</h3>
+                <button class="close-btn" onclick="closeAddSubtopicModal()">&times;</button>
+            </div>
+            <form id="addSubtopicForm">
+                <div class="form-group">
+                    <label class="form-label">📚 Subject</label>
+                    <select id="subtopicSubject" class="form-input" required>
+                        <option value="">Select subject</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📖 Subtopic Name</label>
+                    <input type="text" id="subtopicName" class="form-input" placeholder="Enter subtopic name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">📝 Description (Optional)</label>
+                    <textarea id="subtopicDescription" class="form-input" rows="3" placeholder="Add a description for this subtopic..."></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span> Add Subtopic
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddSubtopicModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/subjects.js"></script>
+</body>
+</html>

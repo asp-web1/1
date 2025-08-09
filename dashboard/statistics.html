@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics - SAGE</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="nav-header">
+                <h2>🌿 SAGE</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard/home.html">Dashboard</a></li>
+                <li><a href="/dashboard/daily-progress.html">Daily Progress</a></li>
+                <li><a href="/dashboard/subjects.html">Subjects</a></li>
+                <li><a href="/dashboard/calendar.html">Calendar</a></li>
+                <li><a href="/dashboard/statistics.html" class="active">Statistics</a></li>
+                <li><a href="/dashboard/targets.html">Targets & Milestones</a></li>
+                <li><a href="/dashboard/analytics.html">Advanced Analytics</a></li>
+                <li><a href="/dashboard/settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="stats-container">
+                <header class="content-header">
+                    <h1>Statistics & Analytics</h1>
+                    <div class="user-info">Track your preparation progress</div>
+                </header>
+
+                <!-- Overview Stats -->
+                <div class="stats-overview-grid">
+                    <div class="stat-card">
+                        <h4>Total Study Hours</h4>
+                        <div class="stat-value" id="totalStudyHours">0</div>
+                        <div class="stat-label">All Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Average Daily Hours</h4>
+                        <div class="stat-value" id="avgDailyHours">0</div>
+                        <div class="stat-label">Last 30 days</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Study Days</h4>
+                        <div class="stat-value" id="totalStudyDays">0</div>
+                        <div class="stat-label">Days Active</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Current Streak</h4>
+                        <div class="stat-value" id="currentStreak">0</div>
+                        <div class="stat-label">Days</div>
+                        <div class="stat-sublabel" id="bestStreakStats">Best: 0 days</div>
+                    </div>
+                </div>
+
+                <!-- Overall Progress Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Overall Progress</h3>
+                        <div class="chart-controls">
+                            <label for="overallRange">Select Month:</label>
+                            <input type="month" id="overallRange" onchange="renderOverallChart()">
+                        </div>
+                    </div>
+                    <div class="chart-wrapper" id="overallChart">
+                        <!-- Overall progress chart will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Subject Progress Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Subject-wise Progress</h3>
+                        <div class="chart-controls">
+                            <div class="subject-selector-container">
+                                <div class="subject-selector-header">
+                                    <label for="subjectSelector">Select Subjects:</label>
+                                    <button type="button" class="btn btn-sm btn-secondary" id="toggleSubjectSelector" onclick="toggleSubjectSelector()">
+                                        <span id="toggleSubjectText">Hide</span> Subjects
+                                    </button>
+                                </div>
+                                <div class="subject-checkboxes" id="subjectCheckboxes">
+                                    <label class="subject-checkbox-item">
+                                        <input type="checkbox" value="all" checked> All Subjects
+                                    </label>
+                                </div>
+                                <small>Select multiple subjects to compare</small>
+                            </div>
+                            <label for="subjectRange">Select Month:</label>
+                            <input type="month" id="subjectRange" onchange="renderSubjectChart()">
+                        </div>
+                    </div>
+                    <div class="chart-wrapper" id="subjectChart">
+                        <!-- Subject progress bars will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Monthly Progress Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Monthly Study Progress</h3>
+                        <div class="chart-controls">
+                            <label for="monthlyRange">Select Month:</label>
+                            <input type="month" id="monthlyRange" onchange="renderMonthlyChart()">
+                        </div>
+                    </div>
+                    <div class="chart-wrapper" id="monthlyChart">
+                        <!-- Monthly chart will be rendered here -->
+                    </div>
+                    <button class="btn btn-secondary" onclick="exportMonthlyReport()">Export Monthly PDF</button>
+                </div>
+
+                <!-- Daily Progress Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>Daily Study Hours</h3>
+                        <div class="chart-controls">
+                            <label for="dailyRange">Select Month:</label>
+                            <input type="month" id="dailyRange" onchange="renderDailyChart()">
+                        </div>
+                    </div>
+                    <div class="chart-wrapper" id="dailyChart">
+                        <!-- Daily chart will be rendered here -->
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="chart-container">
+                    <h3>Recent Study Activity</h3>
+                    <div id="recentStats">
+                        <!-- Recent activity stats will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/libs/simple-charts.js"></script>
+    <script src="../assets/js/statistics.js"></script>
+</body>
+</html>

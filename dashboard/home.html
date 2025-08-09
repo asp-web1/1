@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="nav-header">
+                <h2>🌿 SAGE</h2>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard/home.html" class="active">Dashboard</a></li>
+                <li><a href="/dashboard/daily-progress.html">Daily Progress</a></li>
+                <li><a href="/dashboard/subjects.html">Subjects</a></li>
+                <li><a href="/dashboard/calendar.html">Calendar</a></li>
+                <li><a href="/dashboard/statistics.html">Statistics</a></li>
+                <li><a href="/dashboard/targets.html">Targets & Milestones</a></li>
+                <li><a href="/dashboard/settings.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="content-header">
+                <div>
+                    <h1>SAGE Dashboard</h1>
+                    <div class="sage-full-form-small">SAGE - Study Analytics & Goal Engine</div>
+                    <div class="user-info">Welcome back! 🎯 Your study journey continues...</div>
+                    <div class="current-date" id="currentDate">Loading...</div>
+                </div>
+            </header>
+
+            <!-- Countdown Section -->
+            <section class="countdown-section">
+                <div class="countdown-card">
+                    <h3>⏰ Exam Countdown</h3>
+                    <div class="countdown-timer" id="countdownTimer">
+                        <div class="time-unit">
+                            <span id="days">0</span>
+                            <label>Days</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="hours">0</span>
+                            <label>Hours</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="minutes">0</span>
+                            <label>Minutes</label>
+                        </div>
+                        <div class="time-unit">
+                            <span id="seconds">0</span>
+                            <label>Seconds</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Overview -->
+            <section class="stats-overview">
+                <div class="stat-card">
+                    <h4>🔥 Study Streak</h4>
+                    <div class="stat-value" id="studyStreak">0</div>
+                    <div class="stat-label">Current Days</div>
+                    <div class="stat-sublabel" id="bestStreak">Best: 0 days</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📚 Total Hours</h4>
+                    <div class="stat-value" id="totalHours">0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📊 Overall Progress</h4>
+                    <div class="stat-value" id="overallProgress">0%</div>
+                    <div class="stat-label">Complete</div>
+                </div>
+                <div class="stat-card">
+                    <h4>📖 Active Subjects</h4>
+                    <div class="stat-value" id="activeSubjects">0</div>
+                    <div class="stat-label">Subjects</div>
+                </div>
+            </section>
+
+            <!-- Targets & Milestones Section -->
+            <section class="targets-section">
+                <h3>🎯 Weekly & Monthly Targets</h3>
+                <div class="targets-grid">
+                    <div class="target-card enhanced">
+                        <div class="target-header">
+                            <h4>📊 Weekly Target</h4>
+                            <div class="target-icon">📈</div>
+                        </div>
+                        <div class="target-progress">
+                            <div class="target-info">
+                                <span class="current-value" id="weeklyHours">0</span>/<span class="target-value" id="weeklyTarget">0</span> hours
+                            </div>
+                            <div class="progress-bar enhanced">
+                                <div class="progress-fill enhanced" id="weeklyProgressFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="target-days">
+                            <span id="weeklyDays">0</span>/<span id="weeklyTargetDays">0</span> days
+                        </div>
+                        <div class="target-status enhanced" id="weeklyStatus">Not set</div>
+                    </div>
+                    <div class="target-card enhanced">
+                        <div class="target-header">
+                            <h4>📅 Monthly Target</h4>
+                            <div class="target-icon">📊</div>
+                        </div>
+                        <div class="target-progress">
+                            <div class="target-info">
+                                <span class="current-value" id="monthlyHours">0</span>/<span class="target-value" id="monthlyTarget">0</span> hours
+                            </div>
+                            <div class="progress-bar enhanced">
+                                <div class="progress-fill enhanced" id="monthlyProgressFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="target-days">
+                            <span id="monthlyDays">0</span>/<span id="monthlyTargetDays">0</span> days
+                        </div>
+                        <div class="target-status enhanced" id="monthlyStatus">Not set</div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary" onclick="showTargetsModal()">
+                        <span>🎯</span> Set Targets
+                    </button>
+                </div>
+            </section>
+
+            <!-- Today's Events Section -->
+            <section class="today-events">
+                <h3>📅 Today's Events</h3>
+                <div id="todayEvents">
+                    <!-- Today's events will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Recent Activity Section -->
+            <section class="recent-activity">
+                <h3>📈 Recent Study Activity</h3>
+                <div id="recentActivity">
+                    <!-- Recent activity will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Quick Actions Section -->
+            <section class="quick-actions">
+                <h3>⚡ Quick Actions</h3>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <span style="font-size: 2em;">📝</span>
+                            </div>
+                            <h5>Add Daily Progress</h5>
+                            <p class="text-secondary">Record today's study session</p>
+                            <button class="btn btn-primary" onclick="window.location.href='/dashboard/daily-progress.html'">
+                                Add Progress
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <span style="font-size: 2em;">📚</span>
+                            </div>
+                            <h5>Manage Subjects</h5>
+                            <p class="text-secondary">Add or update subjects</p>
+                            <button class="btn btn-primary" onclick="window.location.href='/dashboard/subjects.html'">
+                                Manage Subjects
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <span style="font-size: 2em;">📊</span>
+                            </div>
+                            <h5>View Statistics</h5>
+                            <p class="text-secondary">Analyze your progress</p>
+                            <button class="btn btn-primary" onclick="window.location.href='/dashboard/statistics.html'">
+                                View Stats
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SAGE Info Section -->
+            <section class="sage-info">
+                <div class="sage-full-form">SAGE - Study Analytics & Goal Engine</div>
+                <div class="developer-info">Developed with 💖 by Asp🧠</div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Targets Modal -->
+    <div class="modal" id="targetsModal">
+        <div class="modal-content enhanced">
+            <div class="modal-header">
+                <h3>🎯 Set Study Targets</h3>
+                <button class="close-btn" onclick="closeTargetsModal()">&times;</button>
+            </div>
+            <form id="targetsForm">
+                <div class="form-group">
+                    <label class="form-label">Weekly Study Hours</label>
+                    <input type="number" id="weeklyTargetHours" class="form-input" min="0" max="168" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Weekly Study Days</label>
+                    <input type="number" id="weeklyTargetDays" class="form-input" min="0" max="7" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Monthly Study Hours</label>
+                    <input type="number" id="monthlyTargetHours" class="form-input" min="0" max="744" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Monthly Study Days</label>
+                    <input type="number" id="monthlyTargetDays" class="form-input" min="0" max="31" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Targets</button>
+                <button type="button" class="btn btn-secondary" onclick="closeTargetsModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/storage.js"></script>
+    <script src="../assets/js/app.js"></script>
+</body>
+</html>
